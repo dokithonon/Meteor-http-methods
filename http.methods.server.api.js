@@ -357,7 +357,7 @@ var requestHandler = function(req, res, callback) {
 
     // If data found the work it - either buffer or json
     if (dataLen > 0) {
-      result = new Buffer(dataLen);
+      result = Buffer.alloc(dataLen);
       // Merge the chunks into one buffer
       for (var i = 0, ln = bufferData.length, pos = 0; i < ln; i++) {
         bufferData[i].copy(result, pos);
@@ -605,9 +605,9 @@ WebApp.connectHandlers.use(function(req, res, next) {
           if (self.method !== "HEAD") {
             // Return result
             if (typeof result === 'string') {
-              resultBuffer = new Buffer(result);
+              resultBuffer = Buffer.from(result);
             } else {
-              resultBuffer = new Buffer(JSON.stringify(result));
+              resultBuffer = Buffer.from(JSON.stringify(result));
             }
 
             // Check if user wants to overwrite content length for some reason?
